@@ -1,43 +1,27 @@
-import { Flex, Tag, Typography, Divider } from 'antd'
-import CoinInfo from './CoinInfo'
+import { Flex, Tag, Typography, Divider } from 'antd';
+import PercentageTag from './PercentageTag';
+import InfoRow from './InfoRow';
+import CoinInfo from './CoinInfo';
 
 export default function CoinInfoModal({ coin }) {
-  return (
-    <>
-      <CoinInfo coin={coin} withSymbol />
-      <Divider />
-      <Typography.Paragraph>
-        <Typography.Text strong>1 hour: </Typography.Text>
-        <Tag color={coin.priceChange1h > 0 ? 'green' : 'red'}>
-          {coin.priceChange1h}%
-        </Tag>
-        <Typography.Text strong>1 day: </Typography.Text>
-        <Tag color={coin.priceChange1d > 0 ? 'green' : 'red'}>
-          {coin.priceChange1d}%
-        </Tag>
-        <Typography.Text strong>1 week: </Typography.Text>
-        <Tag color={coin.priceChange1w > 0 ? 'green' : 'red'}>
-          {coin.priceChange1w}%
-        </Tag>
-      </Typography.Paragraph>
-      <Typography.Paragraph>
-        <Typography.Text strong>Price: </Typography.Text>
-        {coin.price.toFixed(2)}$
-      </Typography.Paragraph>
-      <Typography.Paragraph>
-        <Typography.Text strong>Price BTC: </Typography.Text>
-        {coin.priceBtc}
-      </Typography.Paragraph>
-      <Typography.Paragraph>
-        <Typography.Text strong>Market Cap: </Typography.Text>
-        {coin.marketCap}$
-      </Typography.Paragraph>
-      {coin.contractAddress && (
-        <Typography.Paragraph>
-          <Typography.Text strong>Contract Address: </Typography.Text>
-          {coin.contractAddress}
-        </Typography.Paragraph>
-      )}
-    </>
-  )
+	return (
+		<>
+			<CoinInfo coin={coin} withSymbol />
+			<Divider />
+			<Typography.Paragraph>
+				<PercentageTag label='1 hour' value={coin.priceChange1h} />
+				<PercentageTag label='1 day' value={coin.priceChange1d} />
+				<PercentageTag label='1 week' value={coin.priceChange1w} />
+			</Typography.Paragraph>
+			<InfoRow label='Price' value={coin.price.toFixed(2)} suffix='$' />
+			<InfoRow label='Price BTC' value={coin.priceBtc} />
+			<InfoRow label='Market Cap' value={coin.marketCap} suffix='$' />
+			{coin.contractAddress && (
+				<InfoRow
+					label='Contract Address'
+					value={coin.contractAddress}
+				/>
+			)}
+		</>
+	);
 }
